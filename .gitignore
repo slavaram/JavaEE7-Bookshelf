@@ -1,0 +1,15 @@
+# ignore IDE settings files
+.settings/**
+.project
+.classpath
+*/.settings/**
+*/.project
+*/.classpath
+*/.metadata
+
+# ignore maven target files
+*/target/*
+*/target/**
+
+# ignore apache derby log file
+*/derby.log

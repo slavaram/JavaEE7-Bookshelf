@@ -1,0 +1,82 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://java.sun.com/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title>Search book</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+       }
+       td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 5px;
+       }
+    </style>
+  </h:head>
+  <h:body>
+    <h:link outcome="Login" value="Logout" style="float:right;margin:5px;"><f:param name="logout" value="y" /></h:link>
+    <h:link outcome="Home" value="Home" style="float:right;margin:5px;" />
+
+    <h2>Search book</h2>
+    
+    <h:form id="searchForm" enctype="multipart/form-data">
+      <table>
+        <tr>
+          <td>Name:</td>
+          <td>
+            <h:inputText id="name" maxlength="100" required="false" value="#{searchBookBean.name}" />
+            <h:message for="name" />
+          </td>
+        </tr>
+        <tr>
+          <td>ISBN:</td>
+          <td>
+            <h:inputText id="isbn" required="false" value="#{searchBookBean.isbn}"><f:convertNumber integerOnly="true" groupingUsed="false" /></h:inputText>
+            <h:message for="isbn" />
+          </td>
+        </tr>
+        <tr>
+          <td>Author:</td>
+          <td>
+            <h:inputText id="author" maxlength="100" required="false" value="#{searchBookBean.author}"/>
+            <h:message for="author" />
+          </td>
+        </tr>
+        <tr>
+          <td>Publisher:</td>
+          <td>
+            <h:inputText id="publisher" maxlength="100" required="false" value="#{searchBookBean.publisher}" />
+            <h:message for="publisher" />
+          </td>
+        </tr>
+      </table>
+      <h:commandButton id="search" value="Search" action="#{searchBookBean.search}" />
+      
+      <h:panelGroup id="searchResult">
+        <table>
+          <ui:repeat var="book" value="#{searchBookBean.books}">
+            <tr>
+              <td><h:graphicImage url="/images/books/#{book.id}.jpg" style="width:60;height:90;margin:2px;" /></td>
+              <td>#{book.name} (<h:outputText value="#{book.printed}"><f:convertDateTime pattern="yyyy" timeZone="Europe/Moscow" /></h:outputText>)</td>
+              <td>#{book.isbn}</td>
+              <td>#{book.author}</td>
+              <td>by "#{book.publisher}" in <h:outputText value="#{book.published}"><f:convertDateTime pattern="yyyy" timeZone="Europe/Moscow" /></h:outputText></td>
+              <td>
+                  <h:commandLink id="link" value="Add" action="#{searchBookBean.link}"><f:param name="id" value="#{book.id}" /></h:commandLink>
+              </td>
+            </tr>
+          </ui:repeat>
+        </table>
+        <h:panelGroup id="createBook" rendered="#{searchBookBean.books != null and empty searchBookBean.books}">
+          <p>Noting was found. You can <h:link value="create a new book" outcome="CreateBook" ></h:link>.</p>
+        </h:panelGroup>
+      </h:panelGroup>
+    </h:form>
+      
+  </h:body>
+</html>

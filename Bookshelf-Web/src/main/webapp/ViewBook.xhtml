@@ -1,0 +1,23 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <f:metadata>
+    <f:viewParam name="id" />
+  </f:metadata>
+
+  <h:head>
+    <title>View book</title>
+  </h:head>
+  <h:body>
+    <h:link outcome="Login" value="Logout" style="float:right;margin:5px;"><f:param name="logout" value="y" /></h:link>
+    <h:link outcome="Home" value="Home" style="float:right;margin:5px;" />
+
+    <h:graphicImage url="/images/books/#{id}.jpg" style="float:left;width:200;height:300;margin:5px;" />
+    <h1>#{bookBean.book.name} (<h:outputText value="#{bookBean.book.printed}"><f:convertDateTime pattern="yyyy" timeZone="Europe/Moscow" /></h:outputText>)</h1>
+    <p>by <b>#{bookBean.book.author}</b></p>
+    <p>published by "#{bookBean.book.publisher}" in <h:outputText value="#{bookBean.book.published}"><f:convertDateTime pattern="yyyy" timeZone="Europe/Moscow" /></h:outputText></p>
+    <p>ISBN: #{bookBean.book.isbn}</p>
+  </h:body>
+</html>

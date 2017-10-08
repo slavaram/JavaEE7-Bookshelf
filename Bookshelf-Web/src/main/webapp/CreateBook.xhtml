@@ -1,0 +1,76 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://java.sun.com/jsf/passthrough">
+  <f:metadata>
+    <f:viewParam name="id" />
+  </f:metadata>
+
+  <h:head>
+    <h:panelGroup rendered="#{not empty id}"><title>Edit book</title></h:panelGroup>
+    <h:panelGroup rendered="#{empty id}"><title>Create book</title></h:panelGroup>
+  </h:head>
+  <h:body>
+    <h:link outcome="Login" value="Logout" style="float:right;margin:5px;"><f:param name="logout" value="y" /></h:link>
+    <h:link outcome="Home" value="Home" style="float:right;margin:5px;" />
+    
+    <h:panelGroup rendered="#{not empty id}"><h2>Edit book</h2></h:panelGroup>
+    <h:panelGroup rendered="#{empty id}"><h2>Create book</h2></h:panelGroup>
+    
+    <h:form id="createForm" enctype="multipart/form-data">
+      <table>
+        <tr>
+          <td>Name:</td>
+          <td>
+          	<h:inputText id="name" maxlength="100" required="true" value="#{bookBean.book.name}" />
+          	<h:message for="name" />
+          </td>
+        </tr>
+        <tr>
+          <td>ISBN:</td>
+          <td>
+            <h:inputText id="isbn" required="true" value="#{bookBean.book.isbn}"><f:convertNumber integerOnly="true" groupingUsed="false" /></h:inputText>
+            <h:message for="isbn" />
+          </td>
+        </tr>
+        <tr>
+          <td>Author:</td>
+          <td>
+            <h:inputText id="author" maxlength="100" required="false" value="#{bookBean.book.author}"/>
+            <h:message for="author" />
+          </td>
+        </tr>
+        <tr>
+          <td>Printed year:</td>
+          <td>
+            <h:inputText id="printed" required="false" value="#{bookBean.book.printed}"><f:convertDateTime pattern="yyyy" timeZone="Europe/Moscow" /></h:inputText>
+            <h:message for="printed" />
+          </td>
+        </tr>
+        <tr>
+          <td>Published year:</td>
+          <td>
+            <h:inputText id="published" required="false" value="#{bookBean.book.published}"><f:convertDateTime pattern="yyyy" timeZone="Europe/Moscow" /></h:inputText>
+            <h:message for="published" />
+          </td>
+        </tr>
+        <tr>
+          <td>Publisher:</td>
+          <td>
+            <h:inputText id="publisher" maxlength="100" required="false" value="#{bookBean.book.publisher}" />
+            <h:message for="publisher" />
+          </td>
+        </tr>
+        <tr>
+          <td>Cover:</td>
+          <td>
+            <h:inputFile id="cover" required="false" value="#{bookBean.img}" a:accept="image/*"></h:inputFile>
+            <h:message for="cover" />
+          </td>
+        </tr>
+      </table>
+      <h:commandButton id="submit" value="Submit" action="#{bookBean.submit}"><f:param name="id" value="#{id}" /></h:commandButton>
+    </h:form>
+  </h:body>
+</html>
